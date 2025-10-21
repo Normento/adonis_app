@@ -14,8 +14,6 @@ export default class AuthController {
   }
 
 
-  //login method
-
   public async login({ request, response }: HttpContext) {
     const payload = await request.validateUsing(LoginValidator)
 
@@ -33,5 +31,11 @@ export default class AuthController {
       data: user,
       token: tokenValue,
     })
+  }
+
+
+  public async logout({ auth, response }: HttpContext) {
+    await auth.use('api').invalidateToken()
+    return response.status(200).json({ message: 'Logout successful' })
   }
 }

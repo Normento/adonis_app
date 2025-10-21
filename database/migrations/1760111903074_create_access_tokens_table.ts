@@ -4,8 +4,9 @@ export default class extends BaseSchema {
   protected tableName = 'auth_access_tokens'
 
   async up() {
+    await this.raw(`CREATE EXTENSION IF NOT EXISTS "uuid-ossp" schema pg_catalog version "1.1";`)
     this.schema.createTable(this.tableName, (table) => {
-      table.increments('id')
+      table.uuid('id').primary().defaultTo(this.db.rawQuery('uuid_generate_v4()').knexQuery)
       table
         .uuid('tokenable_id')
         .notNullable()

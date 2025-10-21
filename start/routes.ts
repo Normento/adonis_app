@@ -10,6 +10,7 @@
 import AuthController from '#controllers/auth_controller'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
+import PostsController from '#controllers/posts_controller'
 
 router.get('/', async () => {
   return {
@@ -26,6 +27,22 @@ router.group(() => {
   }))
 
 }).prefix('/api/auth')
+
+// Protected route example
+router.group(() => {
+  router.post('/', [PostsController, 'store']).use(middleware.auth({
+    guards: ['api']
+  }))
+  router.get('/:slug', [PostsController, 'show'])
+  router.get('/', [PostsController, 'index'])
+  router.put('/:id', [PostsController, 'update']).use(middleware.auth({
+    guards: ['api']
+  }))
+  router.delete('/:id', [PostsController, 'destroy']).use(middleware.auth({
+    guards: ['api']
+  }))
+
+}).prefix('/api/posts')
 
 
 router.get('dashboard', ({ auth }) => {

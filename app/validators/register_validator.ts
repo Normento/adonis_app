@@ -1,4 +1,4 @@
-import vine from '@vinejs/vine'
+import vine from "@vinejs/vine";
 
 export const registerValidator = vine.compile(
   vine.object({
@@ -11,7 +11,7 @@ export const registerValidator = vine.compile(
       table: 'users',
       column: 'email',
     }),
-    password: vine.string().minLength(8),
+    password: vine.string().minLength(8).regex(/^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d@$!%*#?&]{8,}$/),
     phoneNumber: vine.string().trim().optional(),
   })
 )

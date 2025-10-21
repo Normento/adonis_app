@@ -1,12 +1,45 @@
 
 import vine, { SimpleMessagesProvider } from '@vinejs/vine'
 
-vine.messagesProvider = new SimpleMessagesProvider({
-  'required': 'Le champ {{ field }} est requis.',
-  'string': 'Le champ {{ field }} doit être une chaîne de caractères.',
-  'email': 'La valeur de {{ field }} doit être une adresse email valide.',
-  'username.required': 'Le nom d’utilisateur est obligatoire.',
-  'username.unique': 'Ce nom d’utilisateur est déjà pris.',
-  'email.unique': 'Cette adresse email est déjà utilisée.',
-  'password.minLength': 'Le mot de passe doit contenir au moins {{ min }} caractères.',
-})
+const messages = {
+  string: 'Le champ {{ field }} doit être une chaîne de caractères',
+  email: 'Le champ {{ field }} doit être une adresse e-mail valide',
+  unique: 'La valeur du champ {{ field }} est déjà utilisée',
+  number: 'Le champ {{ field }} doit être un nombre',
+  integer: 'Le champ {{ field }} doit être un entier',
+  boolean: 'Le champ {{ field }} doit être vrai ou faux',
+  date: 'Le champ {{ field }} doit être une date valide',
+  exists: 'La valeur du champ {{ field }} est invalide',
+  array: 'Le champ {{ field }} doit être un tableau',
+  object: 'Le champ {{ field }} doit être un objet',
+  regex: 'Le format du champ {{ field }} est invalide',
+  url: 'Le champ {{ field }} doit être une URL valide',
+  activeUrl: 'Le champ {{ field }} doit être une URL valide',
+  alpha: 'Le champ {{ field }} ne doit contenir que des lettres',
+  alphaNumeric: 'Le champ {{ field }} ne doit contenir que des lettres et des chiffres',
+  minLength: 'Le champ {{ field }} doit contenir au moins {{ min }} caractères',
+  maxLength: 'Le champ {{ field }} ne doit pas dépasser {{ max }} caractères',
+  fixedLength: 'Le champ {{ field }} doit contenir exactement {{ size }} caractères',
+  confirmed: 'Le champ {{ originalField }} et le champ {{ otherField }} doivent être identiques',
+  endsWith: 'Le champ {{ field }} doit se terminer par {{ substring }}',
+  startsWith: 'Le champ {{ field }} doit commencer par {{ substring }}',
+  sameAs: 'Le champ {{ field }} et le champ {{ otherField }} doivent être identiques',
+  notSameAs: 'Le champ {{ field }} et le champ {{ otherField }} doivent être différents',
+  in: 'La valeur sélectionnée pour {{ field }} est invalide',
+  notIn: 'La valeur sélectionnée pour {{ field }} est invalide',
+  ipAddress: 'Le champ {{ field }} doit être une adresse IP valide',
+  uuid: 'Le champ {{ field }} doit être un UUID valide',
+  ulid: 'Le champ {{ field }} doit être un ULID valide',
+  ascii: 'Le champ {{ field }} ne doit contenir que des caractères ASCII',
+  creditCard: 'Le champ {{ field }} doit être un numéro de carte {{ providersList }} valide',
+  hexCode: 'Le champ {{ field }} doit être un code couleur hexadécimal valide',
+  iban: 'Le champ {{ field }} doit être un numéro IBAN valide',
+  jwt: 'Le champ {{ field }} doit être un jeton JWT valide',
+  coordinates: 'Le champ {{ field }} doit contenir des coordonnées valides (latitude et longitude)',
+  mobile: 'Le champ {{ field }} doit être un numéro de téléphone mobile valide',
+  passport: 'Le champ {{ field }} doit être un numéro de passeport valide',
+  postalCode: 'Le champ {{ field }} doit être un code postal valide',
+}
+
+
+vine.messagesProvider = new SimpleMessagesProvider(messages)

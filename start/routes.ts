@@ -7,6 +7,7 @@
 |
 */
 
+import AuthController from '#controllers/auth_controller'
 import router from '@adonisjs/core/services/router'
 
 router.get('/', async () => {
@@ -14,3 +15,11 @@ router.get('/', async () => {
     hello: 'world',
   }
 })
+
+// Auth routes
+router.group(() => {
+  router.post('/register', [AuthController, 'register'])
+  
+}).prefix('/api/auth')
+
+

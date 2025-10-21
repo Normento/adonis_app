@@ -17,12 +17,15 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column()
   declare username: string | null
-  
+
   @column()
   declare fullName: string | null
 
   @column()
   declare email: string
+
+  @column()
+  declare phoneNumber: string | null
 
   @column({ serializeAs: null })
   declare password: string
@@ -34,4 +37,5 @@ export default class User extends compose(BaseModel, AuthFinder) {
   declare updatedAt: DateTime | null
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
+
 }

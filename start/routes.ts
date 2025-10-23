@@ -35,12 +35,12 @@ router.group(() => {
   router.post('/', [PostsController, 'store']).use(middleware.auth({
     guards: ['api']
   }))
-  router.get('/:slug', [PostsController, 'show'])
+  router.get('/:id(slug)', [PostsController, 'show'])
   router.get('/', [PostsController, 'index'])
-  router.put('/:id', [PostsController, 'update']).use(middleware.auth({
+  router.put('/:id(slug)', [PostsController, 'update']).use(middleware.auth({
     guards: ['api']
   }))
-  router.delete('/:id', [PostsController, 'destroy']).use(middleware.auth({
+  router.delete('/:id(slug)', [PostsController, 'destroy']).use(middleware.auth({
     guards: ['api']
   }))
 

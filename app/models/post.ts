@@ -6,6 +6,8 @@ import { compose } from '@adonisjs/core/helpers'
 import { SoftDeletes } from 'adonis-lucid-soft-deletes'
 
 export default class Post extends compose(BaseModel, SoftDeletes)  {
+
+  public static routeLookupKey = 'slug'
   @column({ isPrimary: true })
   declare id: string
 

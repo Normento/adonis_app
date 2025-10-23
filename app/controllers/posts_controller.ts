@@ -4,6 +4,8 @@ import { createPostValidator } from '#validators/post_validator'
 import { cuid } from '@adonisjs/core/helpers'
 import type { HttpContext } from '@adonisjs/core/http'
 import mail from '@adonisjs/mail/services/main'
+import { bind } from '@adonisjs/route-model-binding'
+
 
 
 export default class PostsController {
@@ -56,8 +58,9 @@ export default class PostsController {
   /**
    * Show individual record
    */
-  async show({ params }: HttpContext) {
-    const post = await Post.query().where('slug', params.slug).firstOrFail()
+  @bind()
+  async show({}, post : Post) {
+    //const post = await Post.query().where('slug', params.slug).firstOrFail()
     await post.load('user')
     return {
       data: post.toJSON(),
@@ -67,7 +70,8 @@ export default class PostsController {
   /**
    * Handle form submission for the edit action
    */
-  async update({ params, request }: HttpContext) {
+  @bind()
+  async update({ request }: HttpContext, post: Post) {
     const payload = await request.validateUsing(createPostValidator)
     const image = request.file('image')
     let key: string | null = null
@@ -75,7 +79,6 @@ export default class PostsController {
       key = `images/${cuid()}.${image.extname}`
       await image.moveToDisk(key,'fs', { overwrite: true })
     }
-    const post = await Post.findOrFail(params.id)
     await post.merge({ ...payload, image: key }).save()
     await post.load('user')
     return {
@@ -87,8 +90,8 @@ export default class PostsController {
   /**
    * Delete record
    */
-  async destroy({ params }: HttpContext) {
-    const post = await Post.findOrFail(params.id)
+  @bind()
+  async destroy({}, post: Post) {
     await post.delete()
     return {
       message: 'Post deleted successfully',

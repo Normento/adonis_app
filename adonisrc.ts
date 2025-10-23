@@ -50,7 +50,8 @@ export default defineConfig({
     () => import('@adonisjs/drive/drive_provider'),
     () => import('@adonisjs/mail/mail_provider'),
     () => import('@adonisjs/core/providers/edge_provider'),
-    () => import('adonis-lucid-soft-deletes/provider')
+    () => import('adonis-lucid-soft-deletes/provider'),
+    () => import('@adonisjs/route-model-binding/rmb_provider')
   ],
 
   /*

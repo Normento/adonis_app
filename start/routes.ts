@@ -11,6 +11,8 @@ import AuthController from '#controllers/auth_controller'
 import router from '@adonisjs/core/services/router'
 import { middleware } from './kernel.js'
 import PostsController from '#controllers/posts_controller'
+import swagger from '#config/swagger'
+import AutoSwagger from "adonis-autoswagger";
 
 router.get('/', async () => {
   return {
@@ -48,5 +50,16 @@ router.group(() => {
 router.get('dashboard', ({ auth }) => {
     return auth.user})
     .use(middleware.auth({guards: ['api']}))
+
+
+router.get("/swagger", async () => {
+  return AutoSwagger.default.docs(router.toJSON(), swagger);
+});
+
+router.get("/docs", async () => {
+  return AutoSwagger.default.ui("/swagger", swagger);
+  // return AutoSwagger.default.scalar("/swagger"); to use Scalar instead. If you want, you can pass proxy url as second argument here.
+  // return AutoSwagger.default.rapidoc("/swagger", "view"); to use RapiDoc instead (pass "view" default, or "read" to change the render-style)
+});
 
 

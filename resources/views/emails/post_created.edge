@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Post Created</title>
+    <style>
+      body {
+        font-family: "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+        background-color: #f6f9fc;
+        margin: 0;
+        padding: 0;
+        color: #333;
+      }
+
+      .email-container {
+        max-width: 600px;
+        margin: 40px auto;
+        background-color: #ffffff;
+        border-radius: 10px;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
+        overflow: hidden;
+      }
+
+      .email-header {
+        background: linear-gradient(135deg, #007bff, #00a8ff);
+        color: #fff;
+        text-align: center;
+        padding: 25px 20px;
+      }
+
+      .email-header h1 {
+        margin: 0;
+        font-size: 22px;
+        font-weight: 600;
+      }
+
+      .email-body {
+        padding: 30px 25px;
+        font-size: 16px;
+        line-height: 1.6;
+      }
+
+      .email-body h2 {
+        color: #222;
+        margin-top: 0;
+      }
+
+      .email-body a.button {
+        display: inline-block;
+        background-color: #007bff;
+        color: #fff !important;
+        text-decoration: none;
+        padding: 12px 24px;
+        border-radius: 6px;
+        margin-top: 20px;
+        font-weight: 600;
+        transition: background-color 0.3s ease;
+      }
+
+      .email-body a.button:hover {
+        background-color: #0056b3;
+      }
+
+      .email-footer {
+        text-align: center;
+        font-size: 13px;
+        color: #777;
+        padding: 20px;
+        border-top: 1px solid #eee;
+      }
+
+      @media (max-width: 600px) {
+        .email-body {
+          padding: 20px 15px;
+        }
+        .email-body a.button {
+          width: 100%;
+          text-align: center;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <div class="email-container">
+      <div class="email-header">
+        <h1>🎉 Post Created Successfully</h1>
+      </div>
+
+      <div class="email-body">
+        <h2>Hello {{ user.fullName || user.email }},</h2>
+        <p>
+          Your post "<strong>{{ post.title }}</strong>" has been created successfully and is now live on the platform.
+        </p>
+
+        <p>
+          You can view your post using the button below:
+        </p>
+
+        <p>
+          <a href="https://tonsite.com/posts/{{ post.slug }}" class="button">View My Post</a>
+        </p>
+
+        <p>
+          If you didn’t create this post, please ignore this message.
+        </p>
+
+        <p>Thanks,<br /><strong>The Team</strong></p>
+      </div>
+
+      <div class="email-footer">
+        &copy; {{ new Date().getFullYear() }} TonSite.com — All rights reserved.
+      </div>
+    </div>
+  </body>
+</html>

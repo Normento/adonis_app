@@ -1,7 +1,10 @@
 import Post from '#models/post'
 import { createPostValidator } from '#validators/post_validator'
+import { Env } from '@adonisjs/core/env'
 import { cuid } from '@adonisjs/core/helpers'
 import type { HttpContext } from '@adonisjs/core/http'
+import mail from '@adonisjs/mail/services/main'
+
 
 export default class PostsController {
   /**
@@ -31,8 +34,15 @@ export default class PostsController {
     while (await Post.query().where('slug', slug).first()) {
       slug = `${slugBase}-${count++}`
     }
-    const post = await Post.create({...payload, image: key, slug : slug, userId: auth.user!.id })
+    const post = await Post.create({...payload, image: key, slug : slug, userId: auth.user?.id })
     await post.load('user')
+    //send mail to user about post creation
+    await mail.sendLater((message) => {
+      message
+        .to(auth.user?.email!)
+        .subject('Post Created Successfully')
+        .htmlView('emails/post_created', { user: auth.user, post })
+    })
 
     return {
       data: { ...post.toJSON() },

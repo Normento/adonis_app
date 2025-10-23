@@ -6,12 +6,13 @@ import { withAuthFinder } from '@adonisjs/auth/mixins/lucid'
 import { DbAccessTokensProvider } from '@adonisjs/auth/access_tokens'
 import * as relations from '@adonisjs/lucid/types/relations'
 import Post from "#models/post"
+import { SoftDeletes } from 'adonis-lucid-soft-deletes'
 const AuthFinder = withAuthFinder(() => hash.use('scrypt'), {
   uids: ['email'],
   passwordColumnName: 'password',
 })
 
-export default class User extends compose(BaseModel, AuthFinder) {
+export default class User extends compose(BaseModel, AuthFinder, SoftDeletes) {
 
   @column({ isPrimary: true })
   declare id: string
@@ -40,6 +41,9 @@ export default class User extends compose(BaseModel, AuthFinder) {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime | null
+
+  @column.dateTime()
+  declare deletedAt: DateTime | null
 
   static accessTokens = DbAccessTokensProvider.forModel(User)
 

@@ -2,8 +2,10 @@ import { DateTime } from 'luxon'
 import { BaseModel, belongsTo, column, computed } from '@adonisjs/lucid/orm'
 import User from "#models/user"
 import * as relations from '@adonisjs/lucid/types/relations'
+import { compose } from '@adonisjs/core/helpers'
+import { SoftDeletes } from 'adonis-lucid-soft-deletes'
 
-export default class Post extends BaseModel {
+export default class Post extends compose(BaseModel, SoftDeletes)  {
   @column({ isPrimary: true })
   declare id: string
 
@@ -30,6 +32,9 @@ export default class Post extends BaseModel {
 
   @column.dateTime({ autoCreate: true, autoUpdate: true })
   declare updatedAt: DateTime
+
+  @column.dateTime()
+  declare deletedAt: DateTime | null
 
   @computed()
   get imageUrl(): string | null {
